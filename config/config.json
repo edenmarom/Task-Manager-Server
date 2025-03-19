@@ -1,0 +1,15 @@
+{
+  "port": 3000,
+  "db": {
+    "connectionString": "mongodb+srv://edenmarom:d46vByChS1kH57rg@cluster0.gd0zo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    "connectionOptions": {
+      "socketTimeoutMS": 0,
+      "dbName":"task-manager"
+    }
+  },
+  "logger": {
+    "dirname": "C://Logs/",
+    "filename": "task-manager-server.log",
+    "level": "info"
+  }
+}
