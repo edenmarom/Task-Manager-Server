@@ -9,7 +9,7 @@ import { initDb } from "./db/db";
 import nconf from "nconf";
 import cors from "cors";
 
-
+// CHECK!
 const app: Express = express();
 const port = nconf.get("port");
 
