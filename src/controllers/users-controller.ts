@@ -53,10 +53,10 @@ export const updateUser = async (
   next: NextFunction
 ) => {
   const id: string = req.params.id;
-  const usertToUpdate: Partial<User> = req.body;
+  const userToUpdate: Partial<User> = req.body;
   const updatedUser: mongoose.Query<any, any, any> = await updateUserQuery(
     id,
-    usertToUpdate
+    userToUpdate
   );
   updatedUser
     ? res.status(200).json(updatedUser)
