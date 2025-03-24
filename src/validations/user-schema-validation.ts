@@ -5,9 +5,15 @@ import mongoose from "mongoose";
 const userDataSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
+  password: Joi.string(),
   phone: Joi.string(),
   dob: Joi.string(),
   imgUrl: Joi.string(),
+});
+
+const partialUserSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().required(),
 });
 
 export const validateUser = async (
@@ -34,7 +40,7 @@ export const validatePartialUser = async (
   next: NextFunction
 ) => {
   try {
-    await userDataSchema.validateAsync(req.body, { abortEarly: false });
+    await partialUserSchema.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (err: any) {
     res

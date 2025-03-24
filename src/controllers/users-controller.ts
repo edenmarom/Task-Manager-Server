@@ -22,11 +22,15 @@ export const getAllUsers = async (
   res: Response,
   next: NextFunction
 ) => {
-    const users: mongoose.Document[] = await getAllUsersQuery();
-    res.status(200).json(users);
+  const users: mongoose.Document[] = await getAllUsersQuery();
+  res.status(200).json(users);
 };
 
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id: string = req.params.id;
   const user: mongoose.Document | null = await getUserByIDQuery(id);
   user
@@ -34,12 +38,20 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
     : res.status(404).send(`User [id = ${id}] not found.`);
 };
 
-export const createUser = async (req: Request, res: Response, next: NextFunction) => {
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const savedUser: mongoose.Document = await createNewFullUserQuery(req.body);
   res.status(201).json(savedUser);
 };
 
-export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id: string = req.params.id;
   const usertToUpdate: Partial<User> = req.body;
   const updatedUser: mongoose.Query<any, any, any> = await updateUserQuery(
@@ -51,7 +63,11 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
     : res.status(404).send(`User [id = ${id}] not found.`);
 };
 
-export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id: string = req.params.id;
   const deletedUser: mongoose.Document | null = await deleteUserQuery(id);
   deletedUser
@@ -64,27 +80,25 @@ export const login = async (
   res: Response,
   next: NextFunction
 ) => {
-    const { email, password } = req.body;
-    const existingUser: UserDocument | null = await getUserByEmailQuery(
-      email
-    );
-    if (!existingUser || !existingUser.validPassword(password)) {
-      const error = Error("Wrong details. Please try again.");
-      return next(error);
-    }
-    if (existingUser && existingUser._id) {
-      let token = createToken(existingUser._id.toString());
-      res.status(200).json({
-        success: true,
-        data: {
-          userId: existingUser._id,
-          token: token,
-        },
-      });
-    } else {
-      const error = Error("Something went wrong. Please try again.");
-      return next(error);
-    }
+  const { email, password } = req.body;
+  const existingUser: UserDocument | null = await getUserByEmailQuery(email);
+  if (!existingUser || !existingUser.validPassword(password)) {
+    const error = Error("Wrong details. Please try again.");
+    return next(error);
+  }
+  if (existingUser && existingUser._id) {
+    let token = createToken(existingUser._id.toString());
+    res.status(200).json({
+      success: true,
+      data: {
+        userId: existingUser._id,
+        token: token,
+      },
+    });
+  } else {
+    const error = Error("Something went wrong. Please try again.");
+    return next(error);
+  }
 };
 
 export const signup = async (
@@ -103,7 +117,7 @@ export const signup = async (
   });
   newUser.password = newUser.generateHash(password);
   const savedUser: UserDocument | null = await createNewUserQuery(newUser);
-  if (savedUser){
+  if (savedUser) {
     let token = createToken(savedUser._id.toString());
     res.status(201).json({
       success: true,
@@ -117,5 +131,3 @@ export const signup = async (
     return next(error);
   }
 };
-
-

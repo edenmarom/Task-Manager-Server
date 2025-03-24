@@ -31,4 +31,3 @@ export const UserModel = mongoose.model<User, Model<User, UserModelMethods>>(
   "User",
   UserSchema
 );
-
