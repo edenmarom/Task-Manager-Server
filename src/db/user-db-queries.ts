@@ -1,10 +1,12 @@
 import mongoose, { Query, Document, Types } from "mongoose";
 import { User } from "../models/user.model";
-import { UserModel } from "../schemas/user";
+import { UserModel, UserModelMethods } from "../schemas/user";
 import { keyBy } from "lodash";
 
-interface UserDocument extends User, Document {}
-
+// export interface UserDocument extends User, Document {}
+export interface UserDocument extends User, Document, UserModelMethods {
+  _id: mongoose.Types.ObjectId;
+}
 
 export const getAllUsersQuery = (): Query<User[], User> => {
   return UserModel.find();
@@ -26,7 +28,18 @@ export const getUserByIDQuery = (
   return UserModel.findById(id);
 };
 
-export const createNewUserQuery = (user: User): Promise<Document> => {
+export const getUserByEmailQuery = (
+  email: string
+): Query<UserDocument | null, UserDocument> => {
+  return UserModel.findOne({ email: email });
+};
+
+export const createNewUserQuery = async (user: User): Promise<UserDocument> => {
+  const newUser = new UserModel(user);
+  return (await newUser.save()) as any as UserDocument;
+};
+
+export const createNewFullUserQuery = async (user: User): Promise<Document> => {
   return UserModel.create(user);
 };
 

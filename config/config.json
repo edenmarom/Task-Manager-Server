@@ -4,12 +4,15 @@
     "connectionString": "mongodb+srv://edenmarom:d46vByChS1kH57rg@cluster0.gd0zo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     "connectionOptions": {
       "socketTimeoutMS": 0,
-      "dbName":"task-manager"
+      "dbName": "task-manager"
     }
   },
   "logger": {
     "dirname": "C://Logs/",
     "filename": "task-manager-server.log",
     "level": "info"
-  }
+  },
+  "secret": "This is my secret",
+  "bcrypt-salt-rounds": 10,
+  "default-img-path": "../assets/profile.png"
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, deleteUser, getAllUsers, getUser, updateUser } from "../controllers/users-controller";
+import { createUser, deleteUser, getAllUsers, getUser, login, updateUser } from "../controllers/users-controller";
 import { validatePartialUser, validateUser, validateUserId } from "../validations/user-schema-validation";
 
 export const userRouter = express.Router();
@@ -14,3 +14,5 @@ userRouter.put(
   updateUser
 );
 userRouter.delete("/deleteUser/:id", validateUserId, deleteUser);
+userRouter.post("/login/", validateUser, login);
+// TODO: add signup route
