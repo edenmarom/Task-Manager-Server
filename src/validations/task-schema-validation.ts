@@ -6,6 +6,7 @@ const taskDataSchema = Joi.object({
   title: Joi.string(),
   description: Joi.string(),
   status: Joi.string(),
+  userId:Joi.string()
 });
 
 export const validateTask = async (

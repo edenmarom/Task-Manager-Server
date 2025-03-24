@@ -5,6 +5,7 @@ import {
   deleteTaskQuery,
   getAllTasksQuery,
   getTaskByIDQuery,
+  getTasksByUserIDQuery,
   updateTaskQuery,
 } from "../db/task-db-queries";
 import { Task } from "../models/task.model";
@@ -18,6 +19,19 @@ export const getAllTasks = async (
   res.status(200).json(tasks);
   await next();
 };
+
+export const getTasksByUserId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId: string = req.params.id;
+  const tasks:  mongoose.Document[] = await getTasksByUserIDQuery(userId);
+  tasks
+    ? res.status(200).json(tasks)
+    : res.status(404).send(`Tasks for user [userId = ${userId}] not found.`);
+};
+
 
 export const getTask = async (
   req: Request,

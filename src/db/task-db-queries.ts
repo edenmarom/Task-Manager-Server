@@ -26,6 +26,12 @@ export const getTaskByIDQuery = (
   return TaskModel.findById(id);
 };
 
+export const getTasksByUserIDQuery = (
+  userId: string
+): Query<TaskDocument[], TaskDocument> => { 
+  return TaskModel.find({ userId: userId }); 
+};
+
 export const createNewTaskQuery = (task: Task): Promise<Document> => {
   return TaskModel.create(task);
 };
