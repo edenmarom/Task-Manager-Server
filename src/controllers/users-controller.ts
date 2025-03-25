@@ -83,8 +83,9 @@ export const login = async (
   const { email, password } = req.body;
   const existingUser: UserDocument | null = await getUserByEmailQuery(email);
   if (!existingUser || !existingUser.validPassword(password)) {
-    const error = Error("Wrong details. Please try again.");
-    return next(error);
+    res
+      .status(401)
+      .json({ message: "Wrong details. Please try again." });
   }
   if (existingUser && existingUser._id) {
     let token = createToken(existingUser._id.toString());
@@ -96,8 +97,9 @@ export const login = async (
       },
     });
   } else {
-    const error = Error("Something went wrong. Please try again.");
-    return next(error);
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please try again." });
   }
 };
 
