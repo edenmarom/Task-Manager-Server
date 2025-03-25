@@ -35,6 +35,14 @@ export const getUserByEmailQuery = (
 };
 
 export const createNewUserQuery = async (user: User): Promise<UserDocument> => {
+  
+  const existingUser = await getUserByEmailQuery(user.email);
+  if (existingUser) {
+    throw new Error(
+      "This email address is already registered. Please use a different email or log in."
+    );  
+}
+
   const newUser = new UserModel(user);
   return (await newUser.save()) as any as UserDocument;
 };

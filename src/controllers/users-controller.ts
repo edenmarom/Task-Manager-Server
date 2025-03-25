@@ -106,28 +106,37 @@ export const signup = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, password } = req.body;
-  const newUser: any = new UserModel({
-    email: email,
-    password: "",
-    name: "",
-    phone: "",
-    dob: "",
-    imgUrl: defaultImgPath,
-  });
-  newUser.password = newUser.generateHash(password);
-  const savedUser: UserDocument | null = await createNewUserQuery(newUser);
-  if (savedUser) {
-    let token = createToken(savedUser._id.toString());
-    res.status(201).json({
-      success: true,
-      data: {
-        userId: savedUser._id,
-        token: token,
-      },
-    });
-  } else {
-    const error = Error("Something went wrong. Please try again.");
-    return next(error);
-  }
+   try {
+     const { email, password } = req.body;
+     const newUser: any = new UserModel({
+       email: email,
+       password: "",
+       name: "",
+       phone: "",
+       dob: "",
+       imgUrl: defaultImgPath,
+     });
+     newUser.password = newUser.generateHash(password);
+     const savedUser: UserDocument = await createNewUserQuery(newUser);
+     let token = createToken(savedUser._id.toString());
+     res.status(201).json({
+       success: true,
+       data: {
+         userId: savedUser._id,
+         token: token,
+       },
+     });
+   } catch (error) {
+     const err = error as Error;
+     if (
+       err.message ===
+       "This email address is already registered. Please use a different email or log in."
+     ) {
+       // 409 - Conflict
+       res.status(409).json({ success: false, message: err.message });
+     } else {
+        const error = Error("Something went wrong. Please try again.");
+        next(error);
+     }
+   }
 };
