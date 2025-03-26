@@ -80,27 +80,32 @@ export const login = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, password } = req.body;
-  const existingUser: UserDocument | null = await getUserByEmailQuery(email);
-  if (!existingUser || !existingUser.validPassword(password)) {
-    res
-      .status(401)
-      .json({ message: "Wrong details. Please try again." });
-  }
-  if (existingUser && existingUser._id) {
-    let token = createToken(existingUser._id.toString());
-    res.status(200).json({
-      success: true,
-      data: {
-        userId: existingUser._id,
-        token: token,
-      },
-    });
-  } else {
-    res
-      .status(500)
-      .json({ message: "Something went wrong. Please try again." });
-  }
+   try {
+     const { email, password } = req.body;
+     const existingUser: UserDocument | null = await getUserByEmailQuery(email);
+
+     if (!existingUser || !existingUser.validPassword(password)) {
+       res.status(401).json({ message: "Wrong details. Please try again." });
+       return;
+     }
+
+     if (existingUser._id) {
+       const token = createToken(existingUser._id.toString());
+       res.status(200).json({
+         success: true,
+         data: {
+           userId: existingUser._id,
+           token: token,
+         },
+       });
+       return;
+     }
+     res
+       .status(500)
+       .json({ message: "Something went wrong. Please try again." });
+   } catch (error) {
+     next(error);
+   }
 };
 
 export const signup = async (
@@ -128,6 +133,7 @@ export const signup = async (
          token: token,
        },
      });
+     return;
    } catch (error) {
      const err = error as Error;
      if (
@@ -136,6 +142,7 @@ export const signup = async (
      ) {
        // 409 - Conflict
        res.status(409).json({ success: false, message: err.message });
+       return;
      } else {
         const error = Error("Something went wrong. Please try again.");
         next(error);
