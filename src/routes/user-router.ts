@@ -4,8 +4,6 @@ import {
   deleteUser,
   getAllUsers,
   getUser,
-  login,
-  signup,
   updateUser,
 } from "../controllers/users-controller";
 import {

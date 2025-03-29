@@ -11,7 +11,7 @@ const userDataSchema = Joi.object({
   imgUrl: Joi.string(),
 });
 
-const partialUserSchema = Joi.object({
+const partialAuthUserSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().required(),
 });
@@ -34,13 +34,28 @@ export const validateUser = async (
   }
 };
 
+export const validatePartialAuthUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await partialAuthUserSchema.validateAsync(req.body, { abortEarly: false });
+    next();
+  } catch (err: any) {
+    res
+      .status(400)
+      .send(err.details.map((detail: any) => detail.message).join(", "));
+  }
+};
+
 export const validatePartialUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    await partialUserSchema.validateAsync(req.body, { abortEarly: false });
+    await userDataSchema.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (err: any) {
     res
