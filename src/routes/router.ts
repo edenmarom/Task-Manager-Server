@@ -7,7 +7,8 @@ import { verifyToken } from "../middlewares/jwt-middleware";
 export const router = express.Router();
 
 router.use((req, res, next) => {
-    if (req.path.startsWith("/auth/")) {
+    if (req.path.startsWith("/auth/") || 
+        req.path.startsWith("/api-docs")) {
       next();
     } else {
       verifyToken(req, res, next);

@@ -6,6 +6,7 @@ import { errorMiddleware } from "./middlewares/error";
 import { dbConnectionStatusMiddleware } from "./middlewares/db-connection-status";
 import { loggerMiddleware } from "./middlewares/logger";
 import { initDb } from "./db/db";
+import { setupSwagger } from "./swagger/swagger";
 import nconf from "nconf";
 import cors from "cors";
 
@@ -18,8 +19,11 @@ app.use(errorMiddleware);
 app.use(loggerMiddleware);
 app.use(dbConnectionStatusMiddleware);
 app.use(router);
+setupSwagger(app);
+
 
 app.listen(port, () => {
   logger.info(`Server is running at http://localhost:${port}`);
+  logger.info(`Swagger Docs available at http://localhost:${port}/api-docs`);
   initDb();
 });
