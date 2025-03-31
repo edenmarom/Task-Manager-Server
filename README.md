@@ -11,12 +11,12 @@ A Node.js and Express-based API for managing tasks and users with authentication
 
 ## **Setup**
 1. Clone the repository:
-    ```sh
-    git clone [https://github.com/edenmarom/Task-Manager-Server.git](https://github.com/edenmarom/Task-Manager-Server.git)
+    ```
+    git clone https://github.com/edenmarom/Task-Manager-Server.git
     ```
 
 2. Install dependencies:
-    ```sh
+    ```
     npm install
     ```
 
@@ -26,7 +26,7 @@ DB: MongoDB (Atlas).
 no setup required.
 
 ## **Running the Server**
-    ```sh
+    ```
     npm run start
     ```
 
