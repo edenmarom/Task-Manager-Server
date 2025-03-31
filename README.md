@@ -1,4 +1,4 @@
-# Task Manager API
+# Task Manager Server
 
 A Node.js and Express-based API for managing tasks and users with authentication.
 
@@ -21,7 +21,8 @@ A Node.js and Express-based API for managing tasks and users with authentication
     ```
 
 ## **Database Setup**
-DB: MongoDB (Atlas)
+DB: MongoDB (Atlas).
+
 no setup required.
 
 ## **Running the Server**
@@ -30,13 +31,14 @@ no setup required.
     ```
 
 ## **API Documentation**
-The API is documented using Swagger. 
+The API is documented using Swagger.
+
 To view the API docs:
 1. Start the server.
 2. Open http://localhost:3000/api-docs in your browser.
 
 ## **Architectural Decisions**
-Node.js + Express: Chosen for its lightweight nature and extensive middleware ecosystem.
-MongoDB + Mongoose: Provides flexibility and schema validation for dynamic data.
-JWT Authentication: Ensures secure API access.
-Swagger Integration: Helps document and test API endpoints.
+- Node.js + Express: Chosen for its lightweight nature and extensive middleware ecosystem.
+- MongoDB + Mongoose: Provides flexibility and schema validation for dynamic data.
+- JWT Authentication: Ensures secure API access.
+- Swagger Integration: Helps document and test API endpoints.
