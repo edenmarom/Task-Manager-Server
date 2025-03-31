@@ -27,7 +27,7 @@ no setup required.
 
 ## **Running the Server**
     ```
-    npm run start
+        npm run start
     ```
 
 ## **API Documentation**
