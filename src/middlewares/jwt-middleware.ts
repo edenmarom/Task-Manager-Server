@@ -4,6 +4,10 @@ import nconf from "nconf";
 
 const secret = nconf.get("secret");
 
+export interface AuthenticatedRequest extends Request {
+  userId?: string;
+}
+
 export function verifyToken(
   req: Request,
   res: Response,
@@ -19,7 +23,9 @@ export function verifyToken(
       res.status(403).json({ message: "Failed to authenticate token." });
       return;
     }
-    (req as any).userId = decoded.userId;
+    console.log("token userid");
+    console.log((decoded as { userId: string }).userId);
+    (req as AuthenticatedRequest).userId = (decoded as { userId: string }).userId;
     next();
   });
 }

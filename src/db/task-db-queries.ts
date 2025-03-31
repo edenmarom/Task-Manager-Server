@@ -3,7 +3,7 @@ import { Task } from "../models/task.model";
 import { TaskModel } from "../schemas/task";
 import { keyBy } from "lodash";
 
-interface TaskDocument extends Task, Document {}
+export interface TaskDocument extends Task, Document {}
 
 
 export const getAllTasksQuery = (): Query<Task[], Task> => {
