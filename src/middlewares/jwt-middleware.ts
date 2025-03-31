@@ -23,8 +23,6 @@ export function verifyToken(
       res.status(403).json({ message: "Failed to authenticate token." });
       return;
     }
-    console.log("token userid");
-    console.log((decoded as { userId: string }).userId);
     (req as AuthenticatedRequest).userId = (decoded as { userId: string }).userId;
     next();
   });

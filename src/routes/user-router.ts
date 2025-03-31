@@ -11,6 +11,7 @@ import {
   validateUser,
   validateUserId,
 } from "../validations/user-schema-validation";
+import { isUserOwner } from "../middlewares/is-user-owner";
 
 export const userRouter = express.Router();
 
@@ -21,6 +22,7 @@ userRouter.put(
   "/updateUser/:id",
   validateUserId,
   validatePartialUser,
+  isUserOwner,
   updateUser
 );
-userRouter.delete("/deleteUser/:id",validateUserId, deleteUser);
+userRouter.delete("/deleteUser/:id",validateUserId, isUserOwner, deleteUser);
