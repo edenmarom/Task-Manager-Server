@@ -26,9 +26,10 @@ DB: MongoDB (Atlas).
 no setup required.
 
 ## **Running the Server**
-    ```
-        npm run start
-    ```
+```sh
+npm run start
+```
+By default, the app runs on `http://localhost:3000`.
 
 ## **API Documentation**
 The API is documented using Swagger.
